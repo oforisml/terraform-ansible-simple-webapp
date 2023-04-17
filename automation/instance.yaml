@@ -1,0 +1,33 @@
+- name: Integrating ansible with Terraform
+  hosts: all
+  tasks:
+  #install httpd, php, git packages,
+  - name:  Installing httpd
+    ansible.builtin.apt:
+      name: apache2 #httpd
+      state: present
+  - name: Installing php
+    package: 
+      name: php
+      state: present
+  - name: Starting httpd
+    service: 
+      name: apache2 #httpd
+      state: started
+    
+  - name: Installing git
+    package:
+      name: git
+      state: present
+  
+
+  - name: Making directory
+    file:
+      path: /var/www/html/ansibleTerraform
+      state: directory
+
+
+  - name: git clone repo
+    ansible.builtin.git:
+        repo: https://github.com/ishajain140/index_files.git
+        dest: /var/www/html/ansibleTerraform
